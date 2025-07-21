@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSwapML Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#218085">
+    <meta name="description" content="SmartSwapML - Intelligent Battery Management System">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=demo&libraries=places" async defer></script>
+    <script src="js/api.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Loading State -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p data-i18n="loading">Loading...</p>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header__content">
+                    <div class="header__brand">
+                        <h1>SmartSwapML</h1>
+                        <span class="header__subtitle" data-i18n="subtitle">Intelligent Battery Management</span>
+                    </div>
+                    <div class="header__controls">
+                        <select id="language-selector" class="form-control language-selector">
+                            <option value="en">English</option>
+                            <option value="es">Español</option>
+                            <option value="fr">Français</option>
+                            <option value="de">Deutsch</option>
+                            <option value="zh">中文</option>
+                        </select>
+                        <div class="connection-status" id="connection-status">
+                            <span class="status-dot status-dot--success"></span>
+                            <span data-i18n="connected">Connected</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="container">
+                <div class="nav__tabs">
+                    <button class="nav__tab nav__tab--active" data-section="dashboard" data-i18n="dashboard">Dashboard</button>
+                    <button class="nav__tab" data-section="battery-health" data-i18n="battery_health">Battery Health</button>
+                    <button class="nav__tab" data-section="route-optimizer" data-i18n="route_optimizer">Route Optimizer</button>
+                    <button class="nav__tab" data-section="circular-economy" data-i18n="circular_economy">Circular Economy</button>
+                    <button class="nav__tab" data-section="station-placement" data-i18n="station_placement">Station Placement</button>
+                    <button class="nav__tab" data-section="analytics" data-i18n="analytics">Analytics</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="section section--active">
+                    <div class="section__header">
+                        <h2 data-i18n="dashboard_overview">Dashboard Overview</h2>
+                        <p data-i18n="dashboard_subtitle">Real-time monitoring of your battery fleet</p>
+                    </div>
+
+                    <!-- KPI Cards -->
+                    <div class="kpi-grid">
+                        <div class="card kpi-card">
+                            <div class="card__body">
+                                <div class="kpi-card__content">
+                                    <div class="kpi-card__value" id="total-batteries">0</div>
+                                    <div class="kpi-card__label" data-i18n="total_batteries">Total Batteries</div>
+                                </div>
+                                <div class="kpi-card__icon">🔋</div>
+                            </div>
+                        </div>
+                        <div class="card kpi-card">
+                            <div class="card__body">
+                                <div class="kpi-card__content">
+                                    <div class="kpi-card__value" id="avg-health">0%</div>
+                                    <div class="kpi-card__label" data-i18n="avg_health">Average Health</div>
+                                </div>
+                                <div class="kpi-card__icon">❤️</div>
+                            </div>
+                        </div>
+                        <div class="card kpi-card">
+                            <div class="card__body">
+                                <div class="kpi-card__content">
+                                    <div class="kpi-card__value" id="active-stations">0</div>
+                                    <div class="kpi-card__label" data-i18n="active_stations">Active Stations</div>
+                                </div>
+                                <div class="kpi-card__icon">📍</div>
+                            </div>
+                        </div>
+                        <div class="card kpi-card">
+                            <div class="card__body">
+                                <div class="kpi-card__content">
+                                    <div class="kpi-card__value" id="utilization">0%</div>
+                                    <div class="kpi-card__label" data-i18n="utilization">Utilization</div>
+                                </div>
+                                <div class="kpi-card__icon">⚡</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Battery Fleet Status -->
+                    <div class="card">
+                        <div class="card__header">
+                            <h3 data-i18n="fleet_status">Fleet Status</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="battery-grid" id="battery-grid">
+                                <!-- Battery cards will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alerts -->
+                    <div class="card">
+                        <div class="card__header">
+                            <h3 data-i18n="recent_alerts">Recent Alerts</h3>
+                        </div>
+                        <div class="card__body">
+                            <div id="alerts-list" class="alerts-list">
+                                <!-- Alerts will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Battery Health Section -->
+                <section id="battery-health" class="section">
+                    <div class="section__header">
+                        <h2 data-i18n="battery_health">Battery Health</h2>
+                        <p data-i18n="health_subtitle">Detailed health monitoring and predictions</p>
+                    </div>
+
+                    <div class="health-dashboard">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="health_overview">Health Overview</h3>
+                            </div>
+                            <div class="card__body">
+                                <canvas id="health-chart" height="300"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="degradation_trends">Degradation Trends</h3>
+                            </div>
+                            <div class="card__body">
+                                <canvas id="degradation-chart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Route Optimizer Section -->
+                <section id="route-optimizer" class="section">
+                    <div class="section__header">
+                        <h2 data-i18n="route_optimizer">Route Optimizer</h2>
+                        <p data-i18n="route_subtitle">Terrain-aware route planning with range prediction</p>
+                    </div>
+
+                    <div class="route-dashboard">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="route_planning">Route Planning</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="route-controls">
+                                    <div class="form-group">
+                                        <label class="form-label" data-i18n="from">From</label>
+                                        <select id="route-from" class="form-control">
+                                            <option value="Mumbai">Mumbai</option>
+                                            <option value="Pune">Pune</option>
+                                            <option value="Bangalore">Bangalore</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" data-i18n="to">To</label>
+                                        <select id="route-to" class="form-control">
+                                            <option value="Pune">Pune</option>
+                                            <option value="Mumbai">Mumbai</option>
+                                            <option value="Bangalore">Bangalore</option>
+                                        </select>
+                                    </div>
+                                    <button id="calculate-route" class="btn btn--primary" data-i18n="calculate_route">Calculate Route</button>
+                                </div>
+                                <div id="map-container" class="map-container">
+                                    <div id="route-map" class="route-map"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="route_analysis">Route Analysis</h3>
+                            </div>
+                            <div class="card__body">
+                                <canvas id="elevation-chart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Circular Economy Section -->
+                <section id="circular-economy" class="section">
+                    <div class="section__header">
+                        <h2 data-i18n="circular_economy">Circular Economy</h2>
+                        <p data-i18n="circular_subtitle">Material recovery and sustainability metrics</p>
+                    </div>
+
+                    <div class="circular-dashboard">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="material_recovery">Material Recovery</h3>
+                            </div>
+                            <div class="card__body">
+                                <canvas id="materials-chart" height="300"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="carbon_footprint">Carbon Footprint</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="carbon-metrics">
+                                    <div class="metric">
+                                        <div class="metric__value">2.4 tons</div>
+                                        <div class="metric__label" data-i18n="co2_saved">CO₂ Saved</div>
+                                    </div>
+                                    <div class="metric">
+                                        <div class="metric__value">89%</div>
+                                        <div class="metric__label" data-i18n="efficiency">Efficiency</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Station Placement Section -->
+                <section id="station-placement" class="section">
+                    <div class="section__header">
+                        <h2 data-i18n="station_placement">Station Placement</h2>
+                        <p data-i18n="placement_subtitle">Optimal station location analytics</p>
+                    </div>
+
+                    <div class="placement-dashboard">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="coverage_analysis">Coverage Analysis</h3>
+                            </div>
+                            <div class="card__body">
+                                <div id="placement-map" class="placement-map"></div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="demand_prediction">Demand Prediction</h3>
+                            </div>
+                            <div class="card__body">
+                                <canvas id="demand-chart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analytics Section -->
+                <section id="analytics" class="section">
+                    <div class="section__header">
+                        <h2 data-i18n="analytics">Analytics</h2>
+                        <p data-i18n="analytics_subtitle">ML predictions and performance insights</p>
+                    </div>
+
+                    <div class="analytics-dashboard">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="ml_performance">ML Model Performance</h3>
+                            </div>
+                            <div class="card__body">
+                                <canvas id="ml-chart" height="300"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h3 data-i18n="prediction_accuracy">Prediction Accuracy</h3>
+                            </div>
+                            <div class="card__body">
+                                <canvas id="accuracy-chart" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
