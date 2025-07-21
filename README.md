@@ -2,21 +2,11 @@
 
 **SmartSwapML** is a comprehensive EV Battery Swap Intelligence Platform that combines real-time battery health monitoring, terrain-aware range optimization, circular economy tracking, and smart station placement analytics using cutting-edge AI/ML technologies.
 
-## 🚀 Live Demo
-
-**[Access Live Demo](https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/8e008ff7b05d93749e68cb72a673c16c/6e5a0d17-ff85-4b77-b9dd-6ee9604967a6/index.html)**
-
 **Demo Credentials:**
 - Username: `demo`
 - Password: `demo123`
 
-## ⚡ Quick Start
-
-### Prerequisites
-- **Docker** (20.10+)
-- **Docker Compose** (2.0+)
-- **4GB RAM** minimum
-- **2GB free disk space**
+## Quick Start
 
 ### One-Command Setup
 
