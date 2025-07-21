@@ -45,39 +45,39 @@ docker-compose ps
 
 | Service | URL | Description |
 |---------|-----|-------------|
-| 🌐 **Frontend Dashboard** | [http://localhost:3000](http://localhost:3000) | Main application interface |
-| 📡 **Backend API** | [http://localhost:8000](http://localhost:8000) | REST API server |
-| 📚 **API Documentation** | [http://localhost:8000/docs](http://localhost:8000/docs) | Interactive API docs |
-| 🗄️ **MongoDB UI** | [http://localhost:8081](http://localhost:8081) | Database management |
-| 🔴 **Redis UI** | [http://localhost:8082](http://localhost:8082) | Cache management |
+| **Frontend Dashboard** | [http://localhost:3000](http://localhost:3000) | Main application interface |
+| **Backend API** | [http://localhost:8000](http://localhost:8000) | REST API server |
+| **API Documentation** | [http://localhost:8000/docs](http://localhost:8000/docs) | Interactive API docs |
+| **MongoDB UI** | [http://localhost:8081](http://localhost:8081) | Database management |
+| **Redis UI** | [http://localhost:8082](http://localhost:8082) | Cache management |
 
-## ✨ Features
+## Features
 
-### 🔋 Real-Time Battery Health Monitoring
+### Real-Time Battery Health Monitoring
 - **Digital Twin Engine**: AI-powered battery degradation prediction with 95% accuracy
 - **Health Score Tracking**: Real-time SOC, SOH, cycle count, and temperature monitoring
 - **Predictive Maintenance**: Early warning system for battery replacement needs
 - **Multi-Battery Fleet Management**: Monitor hundreds of batteries simultaneously
 
-### 🗺️ Terrain-Aware Range Optimization
+### Terrain-Aware Range Optimization
 - **Google Maps Integration**: Interactive route planning with real-time traffic
 - **ML Range Prediction**: 92% accurate range forecasting vs 70% industry standard
 - **Weather Integration**: Account for temperature, wind, and climate impacts
 - **Elevation Profiling**: Optimize routes for hilly and challenging terrain
 
-### ♻️ Circular Economy Intelligence
+### Circular Economy Intelligence
 - **Material Recovery Tracking**: Monitor Lithium (78%), Cobalt (85%), Nickel (92%)
 - **Carbon Footprint Analysis**: Track CO2 reduction and environmental impact
 - **Second-Life Applications**: AI recommendations for battery reuse scenarios
 - **EU Battery Regulation Compliance**: Material passport and traceability
 
-### 📍 Smart Station Placement Analytics
+### Smart Station Placement Analytics
 - **Geographic Optimization**: AI-powered location analysis for new stations
 - **Demand Forecasting**: Predict usage patterns and capacity requirements
 - **ROI Calculations**: Investment analysis and profitability projections
 - **Grid Integration**: Renewable energy and load balancing insights
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -112,7 +112,7 @@ docker-compose ps
 | **Containerization** | Docker, Docker Compose | Service orchestration |
 | **Security** | JWT, OAuth2, BCrypt | Authentication and authorization |
 
-## 🎯 Usage
+## Usage
 
 ### 1. Login and Authentication
 ```javascript
@@ -147,7 +147,7 @@ Password: demo123
 - Calculate ROI for potential new station locations
 - Optimize station network for maximum efficiency
 
-## 🔌 API Documentation
+## API Documentation
 
 ### Authentication
 ```bash
@@ -177,7 +177,7 @@ curl -X GET "http://localhost:8000/api/route-optimization?from_loc=Mumbai&to_loc
 
 Visit [http://localhost:8000/docs](http://localhost:8000/docs) for interactive API documentation.
 
-## ⚙️ Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -198,7 +198,7 @@ GOOGLE_MAPS_API_KEY=your_google_maps_key
 ELEVATION_API_KEY=your_elevation_api_key
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -233,75 +233,35 @@ docker-compose down -v
 docker-compose up -d
 ```
 
-## 📊 Project Structure
+## Project Structure
 
 ```
 smartswapml-complete/
-├── 📄 README.md              # This file
-├── 📄 QUICK_START.md         # Quick setup guide
-├── 🐳 docker-compose.yml     # Docker services
-├── 🚀 start.sh              # Start script (Linux/macOS)
-├── 🛑 stop.sh               # Stop script
-├── 🐍 main.py               # FastAPI backend
-├── 📦 requirements.txt       # Python dependencies
-├── 🐳 Dockerfile            # Backend container
-├── ⚙️ .env                  # Environment variables
-├── 🗄️ mongo-init.js         # Database initialization
-├── 🌐 nginx.conf            # Web server config
-└── 📂 frontend/             # Web application
-    ├── 🏠 index.html        # Main dashboard
-    ├── 🎨 css/style.css     # Stylesheets
-    ├── ⚙️ js/dashboard.js   # Main app logic
-    ├── 🔌 js/api.js         # Backend API integration
-    ├── 📱 manifest.json     # PWA configuration
-    └── 👷 sw.js             # Service worker
+├── README.md              # This file
+├── QUICK_START.md         # Quick setup guide
+├── docker-compose.yml     # Docker services
+├── start.sh              # Start script (Linux/macOS)
+├── stop.sh               # Stop script
+├── main.py               # FastAPI backend
+├── requirements.txt       # Python dependencies
+├── Dockerfile            # Backend container
+├── .env                  # Environment variables
+├── mongo-init.js         # Database initialization
+├── nginx.conf            # Web server config
+└── frontend/             # Web application
+    ├── index.html        # Main dashboard
+    ├── css/style.css     # Stylesheets
+    ├── js/dashboard.js   # Main app logic
+    ├── js/api.js         # Backend API integration
+    ├── manifest.json     # PWA configuration
+    └── sw.js             # Service worker
 ```
 
-## 🚀 Deployment Options
+## Deployment Options
 
 ### Local Development
 ```bash
 ./start.sh
 ```
-
-### Production Deployment
-```bash
-# Use production compose file
-docker-compose -f docker-compose.prod.yml up -d
-
-# With SSL/HTTPS
-# Configure nginx with Let's Encrypt certificates
-```
-
-### Cloud Deployment
-- **AWS**: Deploy using ECS/EKS
-- **Azure**: Use Container Instances or AKS
-- **GCP**: Deploy on Cloud Run or GKE
-- **DigitalOcean**: Use App Platform or Droplets
-
-## 🔐 Security Features
-
-- **JWT Authentication** with refresh tokens
-- **Role-based access control** (Admin, Operator, User)
-- **BCrypt password hashing**
-- **CORS protection**
-- **API rate limiting**
-- **Input validation and sanitization**
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Write tests
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-**Made with ❤️ for sustainable EV mobility and circular battery systems**
 
 *SmartSwapML - Intelligent Battery Management for a Sustainable Future*
